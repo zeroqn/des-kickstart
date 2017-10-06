@@ -1,0 +1,17 @@
+{
+  "name": "des-kickgoal",
+  "version": "0.0.1",
+  "description": "Decentralized version of kickstart",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zero.qn",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "zeppelin-solidity": "^1.3.0"
+  }
+}
