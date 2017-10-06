@@ -1,6 +1,6 @@
 const BasicMathLib = artifacts.require('./BasicMathLib.sol');
 // const FactoryUtils = artifacts.require('./FactoryUtils.sol');
-const FundraiseLibrary = artifacts.require('./FundraiseLibrary.sol');
+const FundLibrary = artifacts.require('./FundLibrary.sol');
 const Goal = artifacts.require('./Goal.sol');
 const GoalFactory = artifacts.require('./GoalFactory.sol');
 const GoalLibrary = artifacts.require('./GoalLibrary.sol');
@@ -14,14 +14,14 @@ module.exports = (deployer) => {
     .then(() => deployer.deploy([
       GoalLibrary,
       BasicMathLib,
-      FundraiseLibrary,
+      FundLibrary,
       OneShotGoalLibrary
     ]))
     .then(() => {
       deployer.link(GoalLibrary, Goal);
-      deployer.link(BasicMathLib, FundraiseLibrary);
+      deployer.link(BasicMathLib, FundLibrary);
       deployer.link(BasicMathLib, OneShotGoalFactory);
-      deployer.link(FundraiseLibrary, OneShotGoalLibrary);
+      deployer.link(FundLibrary, OneShotGoalLibrary);
       deployer.link(OneShotGoalLibrary, OneShotGoal);
       deployer.link(BasicMathLib, OneShotGoal);
     });
@@ -32,11 +32,11 @@ module.exports = (deployer) => {
     // .then(() => deployer.link(GoalLibrary, Goal))
     // .then(() => deployer.deploy(BasicMathLib))
     // .then(() => {
-    //   deployer.link(BasicMathLib, FundraiseLibrary);
-    //   return deployer.deploy(FundraiseLibrary);
+    //   deployer.link(BasicMathLib, FundLibrary);
+    //   return deployer.deploy(FundLibrary);
     // })
     // .then(() => {
-    //   deployer.link(FundraiseLibrary, OneShotGoalLibrary);
+    //   deployer.link(FundLibrary, OneShotGoalLibrary);
     //   return deployer.deploy(OneShotGoalLibrary);
     // })
     // .then(() => {

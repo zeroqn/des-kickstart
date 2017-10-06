@@ -1,34 +1,34 @@
 pragma solidity 0.4.15;
 
 /**
- * @title FundraiseLibrary
+ * @title FundLibrary
  * @dev The basic library provide logic implement for fund handling.
  */
 
 import "./BasicMathLib.sol";
 
-library FundraiseLibrary {
+library FundLibrary {
 
     using BasicMathLib for uint;
 
-    struct Fundraise {
+    struct Fund {
         uint                      totalFund;
         mapping (address => uint) funders;
     }
 
-    function getTotalFund(Fundraise storage self)
+    function getTotalFund(Fund storage self)
         internal constant returns (uint)
     {
         return self.totalFund;
     }
 
-    function getUserFund(Fundraise storage self)
+    function getUserFund(Fund storage self)
         internal constant returns (uint)
     {
         return self.funders[msg.sender];
     }
 
-    function fund(Fundraise storage self)
+    function back(Fund storage self)
         internal
     {
         bool overflow;
@@ -42,7 +42,7 @@ library FundraiseLibrary {
         assert(!overflow);
     }
 
-    function withdraw(Fundraise storage self)
+    function withdraw(Fund storage self)
         internal
     {
         bool underflow;
@@ -56,7 +56,7 @@ library FundraiseLibrary {
         msg.sender.transfer(amount);
     }
 
-    function finish(Fundraise storage self, address wallet)
+    function finish(Fund storage self, address wallet)
         internal
     {
         self.totalFund = 0;

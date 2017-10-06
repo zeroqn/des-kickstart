@@ -6,42 +6,46 @@ pragma solidity 0.4.15;
  * handling fund.
  */
 
-import "./FundraiseLibrary.sol";
+import "./FundLibrary.sol";
 
 library OneShotGoalLibrary {
 
-    using FundraiseLibrary for FundraiseLibrary.Fundraise;
+    using FundLibrary for FundLibrary.Fund;
 
-    function getTotalFund(FundraiseLibrary.Fundraise storage fundraise)
+    struct Fundraise {
+        FundLibrary.Fund fund;
+    }
+
+    function getTotalFund(Fundraise storage fundraise)
         internal constant returns (uint)
     {
-        return fundraise.getTotalFund();
+        return fundraise.fund.getTotalFund();
     }
 
-    function getUserFund(FundraiseLibrary.Fundraise storage fundraise)
+    function getUserFund(Fundraise storage fundraise)
         internal constant returns (uint)
     {
-        return fundraise.getUserFund();
+        return fundraise.fund.getUserFund();
     }
 
-    function fund(FundraiseLibrary.Fundraise storage fundraise)
+    function back(Fundraise storage fundraise)
         internal
     {
-        fundraise.fund();
+        fundraise.fund.back();
     }
 
-    function withdraw(FundraiseLibrary.Fundraise storage fundraise)
+    function withdraw(Fundraise storage fundraise)
         internal
     {
-        fundraise.withdraw();
+        fundraise.fund.withdraw();
     }
 
     function finish(
-        FundraiseLibrary.Fundraise storage fundraise,
+        Fundraise storage fundraise,
         address wallet)
         internal
     {
-        fundraise.finish(wallet);
+        fundraise.fund.finish(wallet);
     }
 
 }

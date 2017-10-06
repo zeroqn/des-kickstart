@@ -9,12 +9,13 @@ pragma solidity 0.4.15;
 
 import "./Goal.sol";
 import "./GoalLibrary.sol";
-import "./FundraiseLibrary.sol";
 import "./OneShotGoalLibrary.sol";
 
 contract OneShotGoal is Goal {
 
-    FundraiseLibrary.Fundraise public fundraise;
+    using OneShotGoalLibrary for OneShotGoalLibrary.Fundraise;
+
+    OneShotGoalLibrary.Fundraise internal fundraise;
 
     function OneShotGoal(
         address _goalRegistry,
@@ -40,22 +41,22 @@ contract OneShotGoal is Goal {
     function getTotalFund()
         external constant returns (uint)
     {
-        return OneShotGoalLibrary.getTotalFund(fundraise);
+        return fundraise.getTotalFund();
     }
 
     function getUserFund()
         external constant returns (uint)
     {
-        return OneShotGoalLibrary.getUserFund(fundraise);
+        return fundraise.getUserFund();
     }
 
-    function fund()
+    function back()
         onlyStatus(GoalLibrary.Status.Active)
         payable public
     {
         require(msg.value > 0);
 
-        OneShotGoalLibrary.fund(fundraise);
+        fundraise.back();
     }
 
     function withdraw()
@@ -64,7 +65,7 @@ contract OneShotGoal is Goal {
         require(goal.status == GoalLibrary.Status.Active ||
                 goal.status == GoalLibrary.Status.Cancel);
 
-        OneShotGoalLibrary.withdraw(fundraise);
+        fundraise.withdraw();
     }
 
     function finish()
@@ -74,13 +75,13 @@ contract OneShotGoal is Goal {
     {
         super.finish();
 
-        OneShotGoalLibrary.finish(fundraise, goal.founderWallet);
+        fundraise.finish(goal.founderWallet);
     }
 
     function ()
         payable
     {
-        fund();
+        back();
     }
 
 }
