@@ -7,14 +7,14 @@ contract('GoalRegistry', (accounts) => {
   const fakeNewGoal = accounts[2];
   const founder = accounts[3];
   const founderWallet = accounts[4];
+  let registry;
 
   before(async () => {
-    let registry = await GoalRegistry.deployed();
+    registry = await GoalRegistry.new();
     await registry.setFactories([fakeFactory], [true]);
   });
 
   it('should add new goal to registry', async () => {
-    let registry = await GoalRegistry.deployed();
     let tag = '#aircar';
     let amount = 10;
     let events;
@@ -33,7 +33,6 @@ contract('GoalRegistry', (accounts) => {
   });
 
   it('should not add new goal if sender isnt a factory contract', async () => {
-    let registry = await GoalRegistry.deployed();
     let tag = '#aircar';
     let amount = 10;
 

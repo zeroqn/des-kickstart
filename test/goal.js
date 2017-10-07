@@ -15,7 +15,7 @@ contract('Goal', (accounts) => {
   let goal;
 
   before(async () => {
-    registry = await GoalRegistry.deployed();
+    registry = await GoalRegistry.new();
   });
 
   beforeEach(async () => {

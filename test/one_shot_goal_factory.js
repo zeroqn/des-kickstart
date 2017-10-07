@@ -15,7 +15,7 @@ contract('OneShotGoalFactory', (accounts) => {
   let factory;
 
   before(async () => {
-    registry = await GoalRegistry.deployed();
+    registry = await GoalRegistry.new();
     factory = await OneShotGoalFactory.new(registry.address,
       emergencyMultisig);
     await registry.setFactories([factory.address], [true]);
