@@ -8,6 +8,8 @@ const GoalRegistry = artifacts.require('./GoalRegistry.sol');
 const OneShotGoal = artifacts.require('./OneShotGoal.sol');
 const OneShotGoalFactory = artifacts.require('./OneShotGoalFactory.sol');
 const OneShotGoalLibrary = artifacts.require('./OneShotGoalLibrary.sol');
+const TierGoal = artifacts.require('./TierGoal.sol');
+const TierGoalFactory = artifacts.require('./TierGoalFactory.sol');
 
 module.exports = (deployer) => {
   deployer.deploy(GoalRegistry)
@@ -24,6 +26,8 @@ module.exports = (deployer) => {
       deployer.link(FundLibrary, OneShotGoalLibrary);
       deployer.link(OneShotGoalLibrary, OneShotGoal);
       deployer.link(BasicMathLib, OneShotGoal);
+      deployer.link(BasicMathLib, TierGoal);
+      deployer.link(BasicMathLib, TierGoalFactory);
     });
     // .then(() => deployer.deploy([
     //   GoalLibrary,

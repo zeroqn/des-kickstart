@@ -20,6 +20,11 @@ contract Goal {
         _;
     }
 
+    modifier onlyFounder() {
+        require(goal.isSenderFounder());
+        _;
+    }
+
     modifier onlyStatus(GoalLibrary.Status _status) {
         require(goal.status == _status);
         _;

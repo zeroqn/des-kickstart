@@ -56,6 +56,7 @@ library FundLibrary {
         msg.sender.transfer(amount);
     }
 
+    // TODO: don't need to empty totalFund
     function finish(Fund storage self, address wallet)
         internal
     {
