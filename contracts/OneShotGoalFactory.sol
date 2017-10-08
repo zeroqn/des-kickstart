@@ -42,8 +42,7 @@ contract OneShotGoalFactory is GoalFactory {
           newGoal,
           _goalTag,
           _founder,
-          _founderWallet,
-          _minFundraiseTarget);
+          _founderWallet);
   }
 
 }

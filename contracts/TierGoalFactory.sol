@@ -39,7 +39,6 @@ contract TierGoalFactory is GoalFactory {
             newGoal,
             _goalTag,
             _founder,
-            _founderWallet,
-            1);
+            _founderWallet);
     }
 }

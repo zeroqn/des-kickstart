@@ -16,11 +16,10 @@ contract('GoalRegistry', (accounts) => {
 
   it('should add new goal to registry', async () => {
     let tag = '#aircar';
-    let amount = 10;
     let events;
 
     await registry.registerGoal(fakeNewGoal, tag, founder, founderWallet,
-      amount, {from: fakeFactory});
+      {from: fakeFactory});
     events = await helper.getEvents(registry.OnNewGoalKicked());
 
     assert.isTrue(await registry.isGoal.call(fakeNewGoal));
@@ -29,15 +28,13 @@ contract('GoalRegistry', (accounts) => {
     assert.equal(events[0].args.tag, tag);
     assert.equal(events[0].args.founder, founder);
     assert.equal(events[0].args.founderWallet, founderWallet);
-    assert.equal(events[0].args.minFundraiseTarget.toNumber(), amount);
   });
 
   it('should not add new goal if sender isnt a factory contract', async () => {
     let tag = '#aircar';
-    let amount = 10;
 
     helper.assertThrow(registry.registerGoal, fakeNewGoal, tag, founder,
-      founderWallet, amount);
+      founderWallet);
   });
 
 });

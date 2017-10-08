@@ -33,7 +33,6 @@ contract('OneShotGoalFactory', (accounts) => {
     assert.equal(events[0].args.tag, testTag);
     assert.equal(events[0].args.founder, founder);
     assert.equal(events[0].args.founderWallet, founderWallet);
-    assert.equal(events[0].args.minFundraiseTarget, testAmount);
 
     goal = OneShotGoal.at(events[0].args.goal);
     assert.equal((await goal.goal.call())[5], testTag);

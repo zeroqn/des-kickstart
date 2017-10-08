@@ -13,7 +13,16 @@ library OneShotGoalLibrary {
     using FundLibrary for FundLibrary.Fund;
 
     struct Fundraise {
+        uint             target;
         FundLibrary.Fund fund;
+    }
+
+    function setFundTarget(Fundraise storage fundraise, uint _target)
+        internal
+    {
+        require(_target > 0);
+
+        fundraise.target = _target;
     }
 
     function getTotalFund(Fundraise storage fundraise)

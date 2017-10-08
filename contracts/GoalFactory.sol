@@ -22,8 +22,7 @@ contract GoalFactory {
         address newGoal,
         string tag,
         address founder,
-        address founderWallet,
-        uint minFundraiseTarget)
+        address founderWallet)
         internal
     {
         require(newGoal != 0x0);
@@ -32,9 +31,7 @@ contract GoalFactory {
             newGoal,
             tag,
             founder,
-            founderWallet,
-            minFundraiseTarget
-        );
+            founderWallet);
     }
 
 }

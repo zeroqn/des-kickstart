@@ -10,7 +10,6 @@ contract('Goal', (accounts) => {
   const testTag = '#aircar';
   const testTopic = 'A car can fly';
   const testContentHash = 'aaaaaaa';
-  const testAmount = 10;
   let registry;
   let goal;
 
@@ -20,22 +19,21 @@ contract('Goal', (accounts) => {
 
   beforeEach(async () => {
     goal = await Goal.new(registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash, testAmount);
+      emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should create a new goal successfully ', async () => {
     let tag = '#test';
     let topic = 'test';
     let contentHash = web3.toHex('test');
-    let amount = 20;
     let goalInst;
 
     goalInst = await Goal.new(registry.address, founder, founderWallet,
-      emergencyMultisig, tag, topic, contentHash, amount);
+      emergencyMultisig, tag, topic, contentHash);
 
     let goal = await goalInst.goal.call();
-    assert.equal(goal.length, 12,
-      'goal should contain 12 properties except mapping');
+    assert.equal(goal.length, 11,
+      'goal should contain 11 properties except mapping');
     assert.equal(goal[0], registry.address);
     assert.equal(goal[1].toNumber(), 1, 'Status should be Active');
     assert.equal(goal[2], founder);
@@ -44,47 +42,41 @@ contract('Goal', (accounts) => {
     assert.equal(goal[5], tag);
     assert.equal(goal[6], topic);
     assert.equal(goal[7].toNumber(), 1, 'lastRev should be 1');
-    assert.equal(goal[8].toNumber(), amount);
   });
 
   it('should not create new goal if registry address is wrong', async () => {
     helper.assertThrow(Goal.new, '', founder, founderWallet, emergencyMultisig,
-      testTag, testTopic, testContentHash, testAmount);
+      testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if founder address is wrong', async () => {
     helper.assertThrow(Goal.new, registry.address, '', founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash, testAmount);
+      emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if founder wallet is wrong', async () => {
     helper.assertThrow(Goal.new, registry.address, founder, '',
-      emergencyMultisig, testTag, testTopic, testContentHash, testAmount);
+      emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if emergencyMultisig is wrong', async () => {
     helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      '', testTag, testTopic, testContentHash, testAmount);
+      '', testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if tag is empty', async () => {
     helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, '', testTopic, testContentHash, testAmount);
+      emergencyMultisig, '', testTopic, testContentHash);
   });
 
   it('should not create new goal if topic is empty', async () => {
     helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, '', testContentHash, testAmount);
+      emergencyMultisig, testTag, '', testContentHash);
   });
 
   it('should not create new goal if contentHash is empty', async () => {
     helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, '', testAmount);
-  });
-
-  it('should not create new goal if amount is 0', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash, 0);
+      emergencyMultisig, testTag, testTopic, '');
   });
 
   it('should set goal registry', async () => {
@@ -130,7 +122,8 @@ contract('Goal', (accounts) => {
     const modifiedContentHash2 = 'new content hash 2';
     let contentHash;
 
-    let lastRev = await goal.updateContentHash(modifiedContentHash, {from: founder});
+    let lastRev = await goal.updateContentHash(modifiedContentHash,
+      {from: founder});
     contentHash = await goal.getLastContentHash();
     assert.equal(web3.toUtf8(contentHash), modifiedContentHash);
 

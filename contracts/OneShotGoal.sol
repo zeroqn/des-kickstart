@@ -25,17 +25,17 @@ contract OneShotGoal is Goal {
         string  _goalTag,
         string  _goalTopic,
         bytes32 _goalContentHash,
-        uint    _minFundraseTarget)
+        uint    _fundraiseTarget)
         Goal(_goalRegistry,
              _founder,
              _founderWallet,
              _emergencyMultisig,
              _goalTag,
              _goalTopic,
-             _goalContentHash,
-             _minFundraseTarget)
+             _goalContentHash)
     {
         // constructor
+        fundraise.setFundTarget(_fundraiseTarget);
     }
 
     function getTotalFund()

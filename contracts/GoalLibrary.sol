@@ -21,7 +21,6 @@ library GoalLibrary {
         string       topic;                 // for example: A car can fly
         uint         lastRev;
         mapping (uint => bytes32) contentHashes;
-        uint         minFundraiseTarget;
         uint         createdOn;
         uint         modifiedOn;
         uint         finalizedOn;
@@ -35,8 +34,7 @@ library GoalLibrary {
         address _emergencyMultisig,
         string  _goalTag,
         string  _goalTopic,
-        bytes32 _goalContentHash,
-        uint    _minFundraseTarget)
+        bytes32 _goalContentHash)
         internal
     {
         self.registry = GoalRegistry(_goalRegistry);
@@ -47,7 +45,6 @@ library GoalLibrary {
         self.topic = _goalTopic;
         self.lastRev = 1;
         self.contentHashes[self.lastRev] = _goalContentHash;
-        self.minFundraiseTarget = _minFundraseTarget;
         self.createdOn = now;
         self.modifiedOn = now;
     }

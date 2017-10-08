@@ -30,8 +30,7 @@ contract TierGoal is Goal {
              _emergencyMultisig,
              _goalTag,
              _goalTopic,
-             _goalContentHash,
-             1)
+             _goalContentHash)
     {
         // constructor
         // pause goal, so founder can add tiers

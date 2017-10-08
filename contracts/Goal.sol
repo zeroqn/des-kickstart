@@ -48,8 +48,7 @@ contract Goal {
         address _emergencyMultisig,
         string  _goalTag,
         string  _goalTopic,
-        bytes32 _goalContentHash,
-        uint    _minFundraseTarget)
+        bytes32 _goalContentHash)
     {
         require(_goalRegistry != 0x0);
         require(_founder != 0x0);
@@ -59,7 +58,6 @@ contract Goal {
         require(bytes(_goalTag).length > 0);
         require(bytes(_goalTopic).length > 0);
         require(_goalContentHash != "");
-        require(_minFundraseTarget > 0);
 
         // constructor
         goal.construct(
@@ -69,8 +67,7 @@ contract Goal {
             _emergencyMultisig,
             _goalTag,
             _goalTopic,
-            _goalContentHash,
-            _minFundraseTarget
+            _goalContentHash
         );
         goal.active();
     }

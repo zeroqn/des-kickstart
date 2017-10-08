@@ -15,15 +15,13 @@ contract GoalRegistry is FactoryUtils {
         address indexed goal,
         string tag,
         address founder,
-        address founderWallet,
-        uint indexed minFundraiseTarget);
+        address founderWallet);
 
     function registerGoal(
         address newGoal,
         string  tag,
         address founder,
-        address founderWallet,
-        uint    minFundraiseTarget)
+        address founderWallet)
         onlyFactory
         external
     {
@@ -32,8 +30,7 @@ contract GoalRegistry is FactoryUtils {
             newGoal,
             tag,
             founder,
-            founderWallet,
-            minFundraiseTarget
+            founderWallet
         );
     }
 
