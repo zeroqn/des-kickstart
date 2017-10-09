@@ -34,7 +34,7 @@ contract('TierGoal', (accounts) => {
     goal= await TierGoal.new(registry.address, goType, founder, founderWallet,
       emergencyMultisig, testTag, testTopic, testContentHash);
 
-    goal.addTiers([testTier1.name, testTier2.name],
+    await goal.addTiers([testTier1.name, testTier2.name],
       [testTier1.description, testTier2.description],
       [testTier1.supply, testTier2.supply],
       [testTier1.price, testTier2.price], {from: founder});
