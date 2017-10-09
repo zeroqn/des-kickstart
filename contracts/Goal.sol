@@ -43,6 +43,7 @@ contract Goal {
 
     function Goal(
         address _goalRegistry,
+        uint    _goType,
         address _founder,
         address _founderWallet,
         address _emergencyMultisig,
@@ -51,6 +52,7 @@ contract Goal {
         bytes32 _goalContentHash)
     {
         require(_goalRegistry != 0x0);
+        require(_goType > 0);
         require(_founder != 0x0);
         require(_founderWallet != 0x0);
         require(_emergencyMultisig != 0x0);
@@ -62,6 +64,7 @@ contract Goal {
         // constructor
         goal.construct(
             _goalRegistry,
+            _goType,
             _founder,
             _founderWallet,
             _emergencyMultisig,

@@ -10,6 +10,8 @@ import "./TierGoal.sol";
 
 contract TierGoalFactory is GoalFactory {
 
+    uint public goType = 2;
+
     function TierGoalFactory(
         address _goalRegistry,
         address _emergencyMultisig)
@@ -28,6 +30,7 @@ contract TierGoalFactory is GoalFactory {
     {
         address newGoal = new TierGoal(
             goalRegistry,
+            goType,
             _founder,
             _founderWallet,
             emergencyMultisig,
@@ -37,6 +40,7 @@ contract TierGoalFactory is GoalFactory {
 
         registerGoal(
             newGoal,
+            goType,
             _goalTag,
             _founder,
             _founderWallet);

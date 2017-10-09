@@ -7,6 +7,7 @@ contract('OneShotGoalFactory', (accounts) => {
   const founder = accounts[2];
   const founderWallet = accounts[3];
   const emergencyMultisig = accounts[5];
+  const goType = 1;
   const testTag = '#aircar';
   const testTopic = 'a car can fly';
   const testContentHash = 'aaaaa';
@@ -31,11 +32,12 @@ contract('OneShotGoalFactory', (accounts) => {
 
     assert.equal(events.length, 1);
     assert.equal(events[0].args.tag, testTag);
+    assert.equal(events[0].args.goType, goType);
     assert.equal(events[0].args.founder, founder);
     assert.equal(events[0].args.founderWallet, founderWallet);
 
     goal = OneShotGoal.at(events[0].args.goal);
-    assert.equal((await goal.goal.call())[5], testTag);
+    assert.equal((await goal.goal.call())[6], testTag);
   });
 
 });

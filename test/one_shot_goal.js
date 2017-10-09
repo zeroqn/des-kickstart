@@ -7,6 +7,7 @@ contract('OneShotGoal', (accounts) => {
   const founder = accounts[2];
   const founderWallet = accounts[3];
   const emergencyMultisig = accounts[5];
+  const goType = 1;
   const testTag = '#aircar';
   const testTopic = 'a car can fly';
   const testContentHash = 'aaaaa';
@@ -19,8 +20,9 @@ contract('OneShotGoal', (accounts) => {
   });
 
   beforeEach(async () => {
-    goal = await OneShotGoal.new(registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash, testAmount);
+    goal = await OneShotGoal.new(registry.address, goType, founder,
+      founderWallet, emergencyMultisig, testTag, testTopic, testContentHash,
+      testAmount);
   });
 
   it('should fund a goal', async () => {

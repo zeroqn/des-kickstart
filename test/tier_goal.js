@@ -7,6 +7,7 @@ contract('TierGoal', (accounts) => {
   const founder = accounts[2];
   const founderWallet = accounts[3];
   const emergencyMultisig = accounts[5];
+  const goType = 2;
   const testTag = '#aircar';
   const testTopic = 'a car can fly';
   const testContentHash = 'aaaaa';
@@ -30,7 +31,7 @@ contract('TierGoal', (accounts) => {
   });
 
   beforeEach(async () => {
-    goal= await TierGoal.new(registry.address, founder, founderWallet,
+    goal= await TierGoal.new(registry.address, goType, founder, founderWallet,
       emergencyMultisig, testTag, testTopic, testContentHash);
 
     goal.addTiers([testTier1.name, testTier2.name],
@@ -40,8 +41,8 @@ contract('TierGoal', (accounts) => {
   });
 
   it('should add tiers', async () => {
-    let goal = await TierGoal.new(registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash);
+    let goal = await TierGoal.new(registry.address, goType, founder,
+      founderWallet, emergencyMultisig, testTag, testTopic, testContentHash);
 
     await goal.addTiers([testTier1.name], [testTier1.description],
       [testTier1.supply], [testTier1.price], {from: founder});

@@ -19,6 +19,7 @@ contract OneShotGoal is Goal {
 
     function OneShotGoal(
         address _goalRegistry,
+        uint    _goType,
         address _founder,
         address _founderWallet,
         address _emergencyMultisig,
@@ -27,6 +28,7 @@ contract OneShotGoal is Goal {
         bytes32 _goalContentHash,
         uint    _fundraiseTarget)
         Goal(_goalRegistry,
+             _goType,
              _founder,
              _founderWallet,
              _emergencyMultisig,

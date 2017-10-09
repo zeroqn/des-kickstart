@@ -7,6 +7,7 @@ contract('Goal', (accounts) => {
   const founder = accounts[1];
   const founderWallet = accounts[2];
   const emergencyMultisig = accounts[3];
+  const testType = 9;
   const testTag = '#aircar';
   const testTopic = 'A car can fly';
   const testContentHash = 'aaaaaaa';
@@ -18,7 +19,7 @@ contract('Goal', (accounts) => {
   });
 
   beforeEach(async () => {
-    goal = await Goal.new(registry.address, founder, founderWallet,
+    goal = await Goal.new(registry.address, testType, founder, founderWallet,
       emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
@@ -28,55 +29,61 @@ contract('Goal', (accounts) => {
     let contentHash = web3.toHex('test');
     let goalInst;
 
-    goalInst = await Goal.new(registry.address, founder, founderWallet,
-      emergencyMultisig, tag, topic, contentHash);
+    goalInst = await Goal.new(registry.address, testType, founder,
+      founderWallet, emergencyMultisig, tag, topic, contentHash);
 
     let goal = await goalInst.goal.call();
-    assert.equal(goal.length, 11,
-      'goal should contain 11 properties except mapping');
+    assert.equal(goal.length, 12,
+      'goal should contain 12 properties except mapping');
     assert.equal(goal[0], registry.address);
     assert.equal(goal[1].toNumber(), 1, 'Status should be Active');
-    assert.equal(goal[2], founder);
-    assert.equal(goal[3], founderWallet);
-    assert.equal(goal[4], emergencyMultisig);
-    assert.equal(goal[5], tag);
-    assert.equal(goal[6], topic);
-    assert.equal(goal[7].toNumber(), 1, 'lastRev should be 1');
+    assert.equal(goal[2].toNumber(), testType, 'goType should be ' + testType);
+    assert.equal(goal[3], founder);
+    assert.equal(goal[4], founderWallet);
+    assert.equal(goal[5], emergencyMultisig);
+    assert.equal(goal[6], tag);
+    assert.equal(goal[7], topic);
+    assert.equal(goal[8].toNumber(), 1, 'lastRev should be 1');
   });
 
   it('should not create new goal if registry address is wrong', async () => {
-    helper.assertThrow(Goal.new, '', founder, founderWallet, emergencyMultisig,
-      testTag, testTopic, testContentHash);
+    helper.assertThrow(Goal.new, '', testType, founder, founderWallet,
+      emergencyMultisig, testTag, testTopic, testContentHash);
+  });
+
+  it('should not create new goal if goType is zero', async () => {
+    await helper.assertThrow(Goal.new, registry.address, 0, founder,
+      founderWallet, emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if founder address is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, '', founderWallet,
+    helper.assertThrow(Goal.new, registry.address, testType, '', founderWallet,
       emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if founder wallet is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, '',
+    helper.assertThrow(Goal.new, registry.address, testType, founder, '',
       emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if emergencyMultisig is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      '', testTag, testTopic, testContentHash);
+    helper.assertThrow(Goal.new, registry.address, testType, founder,
+      founderWallet, '', testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if tag is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, '', testTopic, testContentHash);
+    helper.assertThrow(Goal.new, registry.address, testType, founder,
+      founderWallet, emergencyMultisig, '', testTopic, testContentHash);
   });
 
   it('should not create new goal if topic is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, '', testContentHash);
+    helper.assertThrow(Goal.new, registry.address, testType, founder,
+      founderWallet, emergencyMultisig, testTag, '', testContentHash);
   });
 
   it('should not create new goal if contentHash is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, founder, founderWallet,
-      emergencyMultisig, testTag, testTopic, '');
+    helper.assertThrow(Goal.new, registry.address, testType, founder,
+      founderWallet, emergencyMultisig, testTag, testTopic, '');
   });
 
   it('should set goal registry', async () => {
@@ -97,10 +104,10 @@ contract('Goal', (accounts) => {
 
   it('should set founder wallet', async () => {
     await goal.setFounderWalletAddress(accounts[4], {from: founder});
-    assert.equal((await goal.goal.call())[3], accounts[4]);
+    assert.equal((await goal.goal.call())[4], accounts[4]);
 
     await goal.setFounderWalletAddress(accounts[5], {from: emergencyMultisig});
-    assert.equal((await goal.goal.call())[3], accounts[5]);
+    assert.equal((await goal.goal.call())[4], accounts[5]);
   });
 
   it('should not set founder wallet from sender without permission', async ()=>{

@@ -14,6 +14,7 @@ library GoalLibrary {
     struct Goal {
         GoalRegistry registry;
         Status       status;
+        uint         goType;
         address      founder;
         address      founderWallet;
         address      emergencyMultisig;     // can pause or cancel a goal
@@ -29,6 +30,7 @@ library GoalLibrary {
     function construct(
         Goal storage self,
         address _goalRegistry,
+        uint    _goType,
         address _founder,
         address _founderWallet,
         address _emergencyMultisig,
@@ -38,6 +40,7 @@ library GoalLibrary {
         internal
     {
         self.registry = GoalRegistry(_goalRegistry);
+        self.goType = _goType;
         self.founder = _founder;
         self.founderWallet = _founderWallet;
         self.emergencyMultisig = _emergencyMultisig;

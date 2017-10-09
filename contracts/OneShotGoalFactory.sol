@@ -11,6 +11,8 @@ import "./OneShotGoal.sol";
 
 contract OneShotGoalFactory is GoalFactory {
 
+  uint public goType = 1;
+
   function OneShotGoalFactory(
       address _goalRegistry,
       address _emergencyMultisig)
@@ -30,6 +32,7 @@ contract OneShotGoalFactory is GoalFactory {
   {
       address newGoal = new OneShotGoal(
           goalRegistry,
+          goType,
           _founder,
           _founderWallet,
           emergencyMultisig,
@@ -40,6 +43,7 @@ contract OneShotGoalFactory is GoalFactory {
 
       registerGoal(
           newGoal,
+          goType,
           _goalTag,
           _founder,
           _founderWallet);

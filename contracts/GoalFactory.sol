@@ -20,7 +20,8 @@ contract GoalFactory {
 
     function registerGoal(
         address newGoal,
-        string tag,
+        uint    goType,
+        string  tag,
         address founder,
         address founderWallet)
         internal
@@ -29,6 +30,7 @@ contract GoalFactory {
 
         goalRegistry.registerGoal(
             newGoal,
+            goType,
             tag,
             founder,
             founderWallet);

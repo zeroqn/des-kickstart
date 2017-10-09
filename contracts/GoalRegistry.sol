@@ -13,12 +13,14 @@ contract GoalRegistry is FactoryUtils {
 
     event OnNewGoalKicked(
         address indexed goal,
+        uint indexed goType,
         string tag,
         address founder,
         address founderWallet);
 
     function registerGoal(
         address newGoal,
+        uint    goType,
         string  tag,
         address founder,
         address founderWallet)
@@ -28,6 +30,7 @@ contract GoalRegistry is FactoryUtils {
         isGoal[newGoal] = true;
         OnNewGoalKicked(
             newGoal,
+            goType,
             tag,
             founder,
             founderWallet

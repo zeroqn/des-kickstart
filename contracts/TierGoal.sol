@@ -18,6 +18,7 @@ contract TierGoal is Goal {
 
     function TierGoal(
         address _goalRegistry,
+        uint    _goType,
         address _founder,
         address _founderWallet,
         address _emergencyMultisig,
@@ -25,6 +26,7 @@ contract TierGoal is Goal {
         string  _goalTopic,
         bytes32 _goalContentHash)
         Goal(_goalRegistry,
+             _goType,
              _founder,
              _founderWallet,
              _emergencyMultisig,
