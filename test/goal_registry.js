@@ -35,7 +35,7 @@ contract('GoalRegistry', (accounts) => {
   it('should not add new goal if sender isnt a factory contract', async () => {
     let tag = '#aircar';
 
-    helper.assertThrow(registry.registerGoal, fakeNewGoal, goType, tag,
+    await helper.assertThrow(registry.registerGoal, fakeNewGoal, goType, tag,
       founder, founderWallet);
   });
 

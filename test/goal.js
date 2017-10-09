@@ -47,7 +47,7 @@ contract('Goal', (accounts) => {
   });
 
   it('should not create new goal if registry address is wrong', async () => {
-    helper.assertThrow(Goal.new, '', testType, founder, founderWallet,
+    await helper.assertThrow(Goal.new, '', testType, founder, founderWallet,
       emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
@@ -57,32 +57,32 @@ contract('Goal', (accounts) => {
   });
 
   it('should not create new goal if founder address is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, '', founderWallet,
-      emergencyMultisig, testTag, testTopic, testContentHash);
+    await helper.assertThrow(Goal.new, registry.address, testType, '',
+      founderWallet, emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if founder wallet is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, founder, '',
+    await helper.assertThrow(Goal.new, registry.address, testType, founder, '',
       emergencyMultisig, testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if emergencyMultisig is wrong', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, founder,
+    await helper.assertThrow(Goal.new, registry.address, testType, founder,
       founderWallet, '', testTag, testTopic, testContentHash);
   });
 
   it('should not create new goal if tag is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, founder,
+    await helper.assertThrow(Goal.new, registry.address, testType, founder,
       founderWallet, emergencyMultisig, '', testTopic, testContentHash);
   });
 
   it('should not create new goal if topic is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, founder,
+    await helper.assertThrow(Goal.new, registry.address, testType, founder,
       founderWallet, emergencyMultisig, testTag, '', testContentHash);
   });
 
   it('should not create new goal if contentHash is empty', async () => {
-    helper.assertThrow(Goal.new, registry.address, testType, founder,
+    await helper.assertThrow(Goal.new, registry.address, testType, founder,
       founderWallet, emergencyMultisig, testTag, testTopic, '');
   });
 
@@ -95,11 +95,11 @@ contract('Goal', (accounts) => {
   });
 
   it('should not set goal registry from sender without permission', async ()=>{
-    helper.assertThrow(goal.setGoalRegistry, accounts[4]);
+    await helper.assertThrow(goal.setGoalRegistry, accounts[4]);
   });
 
   it('should not set goal registry with wrong address value', async ()=>{
-    helper.assertThrow(goal.setGoalRegistry, '', {from: founder});
+    await helper.assertThrow(goal.setGoalRegistry, '', {from: founder});
   });
 
   it('should set founder wallet', async () => {
@@ -111,11 +111,11 @@ contract('Goal', (accounts) => {
   });
 
   it('should not set founder wallet from sender without permission', async ()=>{
-    helper.assertThrow(goal.setFounderWalletAddress, accounts[4]);
+    await helper.assertThrow(goal.setFounderWalletAddress, accounts[4]);
   });
 
   it('should not set founder wallet with wrong address value', async ()=>{
-    helper.assertThrow(goal.setFounderWalletAddress, '', {from: founder});
+    await helper.assertThrow(goal.setFounderWalletAddress, '', {from: founder});
   });
 
   it('should retrieve last content hash', async () => {
