@@ -107,6 +107,12 @@ contract Goal {
         OnContentHashUpdated(lastRev, _contentHash, now);
     }
 
+    function getStatus()
+        public constant returns (GoalLibrary.Status)
+    {
+        return goal.getStatus();
+    }
+
     // @notive cannot initialize status to Active inside construct function
     // here provide active() function as a workaround.
     function active()

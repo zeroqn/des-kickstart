@@ -43,7 +43,7 @@ contract('SubscribeGoal', (accounts) => {
     async () => {
       await goal.cancel({from: founder});
 
-      assert.equal((await goal.goal.call())[1].toNumber(), 3,
+      assert.equal((await goal.getStatus()).toNumber(), 3,
         'Status should be Cancel');
       await helper.assertThrow(goal.setRoundTarget, 999,
         {from: founder});
@@ -53,7 +53,7 @@ contract('SubscribeGoal', (accounts) => {
     async () => {
       await goal.finish({from: founder});
 
-      assert.equal((await goal.goal.call())[1].toNumber(), 4,
+      assert.equal((await goal.getStatus()).toNumber(), 4,
         'Status should be Finish');
       await helper.assertThrow(goal.setRoundTarget, 999,
         {from: founder});
@@ -73,7 +73,7 @@ contract('SubscribeGoal', (accounts) => {
     async () => {
       await goal.pause({from: founder});
 
-      assert.equal((await goal.goal.call())[1].toNumber(), 2,
+      assert.equal((await goal.getStatus()).toNumber(), 2,
         'Status should be Pause');
       await helper.assertThrow(goal.back, {from: user, value: 999});
     });
@@ -99,7 +99,7 @@ contract('SubscribeGoal', (accounts) => {
 
       let amount = await goal.getRoundUserFund({from: user});
       assert.equal(amount.toNumber(), 1000);
-      assert.equal((await goal.goal.call())[1].toNumber(), 3,
+      assert.equal((await goal.getStatus()).toNumber(), 3,
         'Status should be Cancel');
 
       await goal.withdraw({from: user});
@@ -114,7 +114,7 @@ contract('SubscribeGoal', (accounts) => {
       await goal.back({from: user, value: 1000});
       await goal.pause({from: founder});
 
-      assert.equal((await goal.goal.call())[1].toNumber(), 2,
+      assert.equal((await goal.getStatus()).toNumber(), 2,
         'Status should be Pause');
       await helper.assertThrow(goal.withdraw, {from: user});
     });
@@ -123,7 +123,7 @@ contract('SubscribeGoal', (accounts) => {
       await goal.back({from: user, value: 1000});
       await goal.finish({from: founder});
 
-      assert.equal((await goal.goal.call())[1].toNumber(), 4,
+      assert.equal((await goal.getStatus()).toNumber(), 4,
         'Status should be Finish');
       await helper.assertThrow(goal.withdraw, {from: user});
     });

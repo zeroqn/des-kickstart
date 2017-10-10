@@ -169,8 +169,8 @@ contract('Goal', (accounts) => {
     await goal.pause({from: founder});
     events = await helper.getEvents(goal.OnStatusChanged());
 
-    status = (await goal.goal.call())[1];
-    assert.equal(status, 2, 'status should be Pause');
+    status = await goal.getStatus();
+    assert.equal(status.toNumber(), 2, 'status should be Pause');
     assert.equal(events.length, 1);
     assert.equal(events[0].args.status.toNumber(), 2, 'status should be pause');
   });
@@ -190,9 +190,9 @@ contract('Goal', (accounts) => {
 
     await goal.cancel({from: founder});
     events = await helper.getEvents(goal.OnStatusChanged());
-    status = (await goal.goal.call())[1];
+    status = await goal.getStatus();
 
-    assert.equal(status, 3, 'status should be Cancel');
+    assert.equal(status.toNumber(), 3, 'status should be Cancel');
     assert.equal(events.length, 1);
     assert.equal(events[0].args.status.toNumber(), 3,'status should be Cancel');
   });
@@ -211,14 +211,14 @@ contract('Goal', (accounts) => {
     let status;
 
     await goal.pause({from: founder});
-    status = (await goal.goal.call())[1];
-    assert.equal(status, 2, 'status should be Pause');
+    status = await goal.getStatus();
+    assert.equal(status.toNumber(), 2, 'status should be Pause');
 
     await goal.reviveFromPause({from: founder});
     events = await helper.getEvents(goal.OnStatusChanged());
 
-    status = (await goal.goal.call())[1];
-    assert.equal(status, 1, 'status should be Cancel');
+    status = await goal.getStatus();
+    assert.equal(status.toNumber(), 1, 'status should be Cancel');
     assert.equal(events.length, 1);
     assert.equal(events[0].args.status.toNumber(), 1,'status should be Active');
   });
@@ -239,8 +239,8 @@ contract('Goal', (accounts) => {
     await goal.finish({from: founder});
     events = await helper.getEvents(goal.OnStatusChanged());
 
-    status = (await goal.goal.call())[1];
-    assert.equal(status, 4, 'status should be Finish');
+    status = await goal.getStatus();
+    assert.equal(status.toNumber(), 4, 'status should be Finish');
     assert.equal(events.length, 1);
     assert.equal(events[0].args.status.toNumber(), 4,'status should be Finish');
   });

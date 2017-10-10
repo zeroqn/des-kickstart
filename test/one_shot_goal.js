@@ -58,13 +58,15 @@ contract('OneShotGoal', (accounts) => {
 
   it('should allow user withdraw their fund if status is Cancel', async () => {
     let amount;
+    let status;
 
     await goal.back({from: user, value: 1000});
     amount = await goal.getUserFund({from: user});
     assert.equal(amount.toNumber(), 1000);
 
     await goal.cancel({from: founder});
-    assert.equal((await goal.goal.call())[1], 3, 'status should be Cancel');
+    status = await goal.getStatus();
+    assert.equal(status.toNumber(), 3, 'status should be Cancel');
 
     await goal.withdraw({from: user});
     amount = await goal.getUserFund({from: user});
@@ -97,7 +99,8 @@ contract('OneShotGoal', (accounts) => {
     await goal.finish({from: founder});
     amount = await goal.getTotalFund();
     assert.equal(amount.toNumber(), 0);
-    assert.equal((await goal.goal.call())[1], 4, 'status should be Finish');
+    assert.equal((await goal.getStatus()).toNumber(), 4,
+      'status should be Finish');
   });
 
   it('should allow emergencyMultisig finish a goal', async () => {
@@ -110,7 +113,8 @@ contract('OneShotGoal', (accounts) => {
     await goal.finish({from: emergencyMultisig});
     amount = await goal.getTotalFund();
     assert.equal(amount.toNumber(), 0);
-    assert.equal((await goal.goal.call())[1], 4, 'status should be Finish');
+    assert.equal((await goal.getStatus()).toNumber(), 4,
+      'status should be Finish');
   });
 
   it('should not finish a goal if status isnt Active', async () => {

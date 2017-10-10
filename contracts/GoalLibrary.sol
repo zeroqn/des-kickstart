@@ -93,6 +93,12 @@ library GoalLibrary {
         return self.lastRev;
     }
 
+    function getStatus(Goal storage self)
+        internal constant returns (Status)
+    {
+        return self.status;
+    }
+
     function active(Goal storage self)
         internal
     {

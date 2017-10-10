@@ -198,7 +198,7 @@ contract('TierGoal', (accounts) => {
     await goal.reviveFromPause({from: founder});
     await goal.finish({from: founder});
 
-    assert.equal((await goal.goal.call())[1].toNumber(), 4,
+    assert.equal((await goal.getStatus()).toNumber(), 4,
       'Status should be Finish');
   });
 
