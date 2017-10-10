@@ -97,8 +97,6 @@ contract('OneShotGoal', (accounts) => {
     assert.equal(amount.toNumber(), 1000);
 
     await goal.finish({from: founder});
-    amount = await goal.getTotalFund();
-    assert.equal(amount.toNumber(), 0);
     assert.equal((await goal.getStatus()).toNumber(), 4,
       'status should be Finish');
   });
@@ -111,8 +109,6 @@ contract('OneShotGoal', (accounts) => {
     assert.equal(amount.toNumber(), 1000);
 
     await goal.finish({from: emergencyMultisig});
-    amount = await goal.getTotalFund();
-    assert.equal(amount.toNumber(), 0);
     assert.equal((await goal.getStatus()).toNumber(), 4,
       'status should be Finish');
   });
