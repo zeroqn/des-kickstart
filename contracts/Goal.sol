@@ -56,8 +56,7 @@ contract Goal {
         require(_founder != 0x0);
         require(_founderWallet != 0x0);
         require(_emergencyMultisig != 0x0);
-        // TODO: tag should begin with '#'
-        require(bytes(_goalTag).length > 0);
+        require(GoalLibrary.startsWith(_goalTag, "#"));
         require(bytes(_goalTopic).length > 0);
         require(_goalContentHash != "");
 

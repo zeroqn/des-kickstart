@@ -76,6 +76,11 @@ contract('Goal', (accounts) => {
       founderWallet, emergencyMultisig, '', testTopic, testContentHash);
   });
 
+  it('should not create new goal if tag is not started with #', async () => {
+    await helper.assertThrow(Goal.new, registry.address, testType, founder,
+      founderWallet, emergencyMultisig, 'air', testTopic, testContentHash);
+  });
+
   it('should not create new goal if topic is empty', async () => {
     await helper.assertThrow(Goal.new, registry.address, testType, founder,
       founderWallet, emergencyMultisig, testTag, '', testContentHash);

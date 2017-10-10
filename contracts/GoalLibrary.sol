@@ -129,4 +129,27 @@ library GoalLibrary {
         self.status = Status.Finish;
     }
 
+    function startsWith(string str, string needle)
+        internal constant returns (bool)
+    {
+        bytes memory s = bytes(str);
+        bytes memory n = bytes(needle);
+
+        if (s.length == 0 || n.length == 0) {
+            return false;
+        }
+
+        if (n.length > s.length) {
+            return false;
+        }
+
+        for (uint i = 0; i < n.length; i++) {
+            if (s[i] != n[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
